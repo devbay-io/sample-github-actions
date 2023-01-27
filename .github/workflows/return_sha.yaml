@@ -1,10 +1,16 @@
-name: PR required labels check
+name: Pass commit SHA to variable
 on:
   pull_request:
     types: [opened, labeled, unlabeled, synchronize, reopened]
 jobs:
-  check-labels:
+  commit_sha:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Get sha commit
-        run: git rev-parse HEAD
+        id: get_commit
+        run: |
+          echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+      - name: Show message
+        run: echo "commit number ${{steps.get_commit.outputs.COMMIT_SHA}}"
