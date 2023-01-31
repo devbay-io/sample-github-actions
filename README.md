@@ -25,6 +25,7 @@ Usually to test workflows with act you can do:
 Some workflows need GITHUB_TOKEN to be set - or otherwise these will fail to checkout repository on docker based actions. Example below:
 
 ```bash
-export TOKEN="GITHUB_PERSONAL_ACCESS_TOKEN_WITH_ACCESS_TO_REPO"
+# This is readonly token with access to this repository only. It will calm down act workflows that need GITHUB_TOKEN variable.
+export TOKEN="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"
 act -s GITHUB_TOKEN=${TOKEN} -j modify_json
 ```
