@@ -26,6 +26,9 @@ Some workflows need GITHUB_TOKEN to be set - or otherwise these will fail to che
 
 ```bash
 # This is readonly token with access to this repository only. It will calm down act workflows that need GITHUB_TOKEN variable.
-export TOKEN="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"
+export TOKEN="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"
 act -s GITHUB_TOKEN=${TOKEN} -j modify_json
+
+# or for m1 macs
+act --container-architecture linux/amd64 -s GITHUB_TOKEN=$TOKEN -j modify_json
 ```
