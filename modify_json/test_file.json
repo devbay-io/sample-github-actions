@@ -1,0 +1,7 @@
+{
+  "key": "key",
+  "test_array": [
+    { "name": "key_name_to_change", "value": 10 },
+    { "name": "key_not_to_change", "value": 20 }
+  ]
+}

@@ -1,0 +1,31 @@
+name: Modify json file
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, synchronize, reopened]
+jobs:
+  modify_json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Modify json
+        uses: actions/github-script@v6
+        id: my-script
+        with:
+          result-encoding: string
+          retries: 3
+          script: |
+            const file_path = "modify_json/test_file.json"
+            const fs = require('fs');
+            let rawfile = fs.readFileSync(file_path);
+            let jsonfile = JSON.parse(rawfile);
+            console.log(file_path, " read and parsed to json object. Json content:\n", jsonfile, "\nUpdating file now...")
+            for (let i = 0; i < jsonfile.test_array.length; i++) {
+              if (jsonfile.test_array[i].name === "key_name_to_change") {
+                jsonfile.test_array[i].value = jsonfile.test_array[i].value + 100;
+              }
+            }
+            fs.writeFileSync(file_path, JSON.stringify(jsonfile));
+            let after_update_rawfile = fs.readFileSync(file_path);
+            console.log("File updated. New file content is: \n", JSON.parse(after_update_rawfile));
